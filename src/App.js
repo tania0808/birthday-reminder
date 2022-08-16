@@ -1,30 +1,27 @@
 import './App.css';
-import data from './data/data.json';
+import data from './data/data';
 import { useState } from 'react'
+import Item from './components/Item';
+import Button from './components/Button';
 
 
 function App() {
 
-  const [people, setPeople] = useState(data);
+  const [birthdays, setBirthdays] = useState(data);
 
-  const removeItem = (id) => {
-    const refreshedData = people.filter(item => item.id !== id);
-    setPeople(refreshedData)
+  const handleClick = () => {
+    setBirthdays([]);
   }
 
-  return (
-    <div>
+  return(
+    <div className='container'>
+      <h1>{birthdays.length} birthdays today</h1>
       {
-        people.map((item, index) => {
-          const {id, name} = item;
-          return (
-            <div key={id} className="item">
-              <p>{name}</p>
-              <button onClick={() => removeItem(id)}>remove</button>
-            </div>
-          )
+        birthdays.map((item) => {
+          return <Item key={item.id} {...item} />
         })
       }
+      <Button handleClick={handleClick}/>
     </div>
   )
 }
